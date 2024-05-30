@@ -1,0 +1,57 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id Int @id @default(autoincrement())
+    name String?
+    email String @unique
+    isAdmin Boolean @default(false)
+    categories Category[]
+    quizz_sessions QuizzSession[]
+}
+
+
+model Category {
+    id Int @id @default(autoincrement())
+    name String 
+    userId   Int
+    user     User   @relation(fields: [userId], references: [id])
+    questions Question[]
+}
+
+model Question {
+    id Int @id @default(autoincrement())
+    content String
+    categoryId Int
+    category Category @relation(fields: [categoryId], references: [id])
+    answers Answer[]
+}
+
+model Answer {
+    id Int @id @default(autoincrement())
+    content String
+    questionId Int
+    question Question  @relation(fields: [questionId], references: [id])
+}
+
+model QuizzSession {
+    id Int @id @default(autoincrement())
+    start_time DateTime  @default(now())
+    end_time DateTime 
+    score Int 
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    userAnswers UserAnswer[]
+}
+
+model UserAnswer {
+    id Int @id @default(autoincrement())
+    quizzSession_id Int
+    quizzSession QuizzSession @relation(fields: [quizzSession_id], references: [id])
+}
