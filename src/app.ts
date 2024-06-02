@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors(corsOptions))
 
 /* --------------------------- Define an API route -------------------------- */
-app.use("/api/v1/",apiRoute);
+app.use("/api/v1",apiRoute);
 
 /* ------------------------- Manage route not found ------------------------- */
 app.use((req:Request,res:Response,next:NextFunction)=>{
