@@ -9,9 +9,10 @@ datasource db {
 
 model User {
     id Int @id @default(autoincrement())
-    name String?
+    name String
     email String @unique
     isAdmin Boolean @default(false)
+    password String 
     categories Category[]
     quizz_sessions QuizzSession[]
 }
