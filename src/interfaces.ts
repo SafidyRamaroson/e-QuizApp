@@ -4,6 +4,7 @@
 interface IUser {
     name:string
     email:string
+    password:string
     isAdmin:boolean
 }
 
@@ -44,3 +45,16 @@ enum Category {
     JAVASCRIPT,
     ReactJS
 }
+
+interface ILogin {
+    email:string
+    password:string
+}
+
+/* -------------------------- Optin Mail Interface -------------------------- */
+interface IOptionMailer {
+    emailReceivers:string[] | string
+    subject:string
+    message:any
+}
+export { IUser,IAnswer,IQuestion,IQuizzAnswer,IUserAnswer,ICategory,ILogin,IOptionMailer }
