@@ -13,31 +13,34 @@ model User {
     email String @unique
     isAdmin Boolean @default(false)
     password String 
-    categories Category[]
     quizz_sessions QuizzSession[]
+    categoriesQuizz CategoryQuizz[]
 }
 
 
-model Category {
+model CategoryQuizz {
     id Int @id @default(autoincrement())
     name String 
-    userId   Int
-    user     User   @relation(fields: [userId], references: [id])
     questions Question[]
+    userId Int
+    user User @relation(fields: [userId],references: [id])
 }
 
 model Question {
     id Int @id @default(autoincrement())
     content String
     categoryId Int
-    category Category @relation(fields: [categoryId], references: [id])
-    answers Answer[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime 
+    category CategoryQuizz @relation(fields: [categoryId], references: [id])
+    choises Choice[]
 }
 
-model Answer {
+model Choice {
     id Int @id @default(autoincrement())
     content String
     questionId Int
+    is_correct Boolean @default(false)
     question Question  @relation(fields: [questionId], references: [id])
 }
 
