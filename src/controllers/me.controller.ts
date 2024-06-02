@@ -1,25 +1,57 @@
 import { Response, Request } from "express";
-import show_me_service from "../services/user_me/user_show_me.service";
+import showMeService from "../services/user_me/user.show.me.service";
 import handleError from "../utils/handleError";
 import { User } from "@prisma/client";
+import updateMeService from "../services/user_me/user.update.me";
+import getHashedPassword from "../utils/hashPassword";
 
-const userProfile  = async(req:Request,res:Response) => {
+
+
+const userProfil  = async(req:Request,res:Response) => {
     const { id } = req.params
-
+    
     try {
-       const targetUser:User =  await show_me_service(Number(id))
+       const targetUser:User =  await showMeService(Number(id))
        res
        .status(200)
        .json({
         success:true,
         data:targetUser,
-        message:"User Profile Data"
+        message:"User Profil Data"
        })
     } catch (error) {
         handleError(res,error)
     }
 }
 
+
+const updateUserProfil = async(req:Request,res:Response) => {
+
+    const { id } = req.params
+    const { password }= req.body
+    
+    try {
+
+        let userUpdateInput = {...req.body}
+        if(password){
+            const hashedPassword =await getHashedPassword(password)
+            userUpdateInput = { ...userUpdateInput , password:hashedPassword}
+        }
+
+        const updateUser = await updateMeService(userUpdateInput,Number(id))
+        res
+        .status(200)
+        .json({
+            success:true,
+            data:updateUser,
+            message:"User profil updated"
+        })
+    } catch (error) {
+        handleError(res,error)   
+    }
+}
+
 export default {
-    userProfile
+    userProfil,
+    updateUserProfil,
 }
