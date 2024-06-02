@@ -1,6 +1,5 @@
-
-
-/* ----------------------------- User Interface ----------------------------- */
+import { CategoryQuizz } from "@prisma/client"
+/* ---------------------------- User Interface ----------------------------- */
 interface IUser {
     name:string
     email:string
@@ -16,14 +15,15 @@ interface IQuestion {
 
 /* ----------------------- Category Question Interface ---------------------- */
 interface ICategory {
-    name:Category
+    id:number
+    name:String
 }
 
-/* ---------------------------- Answer Interface ---------------------------- */
-interface IAnswer {
+/* ---------------------------- Choice Interface ---------------------------- */
+interface IChoice {
     content:string
-    question_id:number
     is_correct:boolean
+    questionId:number
 }
 
 /* -------------------------- QuizzAnswer Interface ------------------------- */
@@ -40,12 +40,6 @@ interface IUserAnswer {
     is_correct:number
 }
 
-/* ------------------------- Enum category question ------------------------- */
-enum Category {
-    JAVASCRIPT,
-    ReactJS
-}
-
 interface ILogin {
     email:string
     password:string
@@ -57,4 +51,28 @@ interface IOptionMailer {
     subject:string
     message:any
 }
-export { IUser,IAnswer,IQuestion,IQuizzAnswer,IUserAnswer,ICategory,ILogin,IOptionMailer }
+
+interface IInputChoice {
+    content:string
+    is_correct:boolean
+}
+/* -------------------------- Input create Question ------------------------- */
+
+interface IInputCreateQuestion {
+    content:string
+    category:ICategory
+    choises:IInputChoice[]
+}
+
+export { 
+    IUser,
+    IChoice,
+    IQuestion,
+    IQuizzAnswer,
+    IUserAnswer,
+    ICategory,
+    ILogin,
+    IOptionMailer,
+    IInputCreateQuestion,
+    IInputChoice
+ }
