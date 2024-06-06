@@ -5,6 +5,7 @@ import handleError from "../utils/handleError";
 import { Difficulty, Question } from "@prisma/client";
 import { IChoice,IInputChoice } from "../interfaces";
 import getTenRandomQuestionsWithChoisesServices from "./../services/question/getTenRandomQuestion.service";
+import deleteQuestionService from "../services/question/deleteOneQuestion.service";
 
 
 
@@ -56,7 +57,26 @@ const getTenRandomQuestionsWithChoises = async(req:Request, res:Response) => {
         handleError(res,error)
     }
 }
+
+
+const deleteQuestionController = async(req:Request,res:Response) => {
+    const { questionId } = req.params
+
+    try {
+        await deleteQuestionService(Number(questionId))
+        res
+        .status(200)
+        .json({
+            success:true,
+            data:null,
+            message:"One question Deleted"
+        })
+    } catch (error) {
+        handleError(res,error)
+    }
+}
 export default {
     createQuestionAndChoises,
     getTenRandomQuestionsWithChoises,
+    deleteQuestionController
 }

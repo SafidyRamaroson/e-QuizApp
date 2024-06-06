@@ -5,6 +5,7 @@ const router:Router = express.Router()
 
 router.post("/create",questionController.createQuestionAndChoises)
 router.get("/ten",questionController.getTenRandomQuestionsWithChoises)
+router.delete("/:questionId/delete",questionController.deleteQuestionController)
 
 
 export default router
