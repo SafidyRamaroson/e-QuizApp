@@ -1,4 +1,4 @@
-import { CategoryQuizz } from "@prisma/client"
+import { CategoryQuizz, Choice } from "@prisma/client"
 /* ---------------------------- User Interface ----------------------------- */
 interface IUser {
     name:string
@@ -64,6 +64,17 @@ interface IInputCreateQuestion {
     choises:IInputChoice[]
 }
 
+
+interface IOuputQuestionWithChoices {
+    questionId:number
+    question:string
+    choices :{
+        id:number
+        content:string
+        is_correct:boolean
+    }[]
+}
+
 export { 
     IUser,
     IChoice,
@@ -74,5 +85,6 @@ export {
     ILogin,
     IOptionMailer,
     IInputCreateQuestion,
-    IInputChoice
+    IInputChoice,
+    IOuputQuestionWithChoices
  }
