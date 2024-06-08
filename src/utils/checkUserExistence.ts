@@ -1,15 +1,23 @@
-import { PrismaClient, User } from "@prisma/client"
+import { User } from "@prisma/client"
+import getInstancePrisma from "./prisma/getInstancePrisma"
 
-const checkUserExistence  = async(email:string):Promise<User | null > => {
+const prisma = getInstancePrisma()
+const checkUserExistence  = async(email:string,userId?:number):Promise<User | null > => {
 
-    const prisma  = new PrismaClient()
-    const user:User|null = await prisma.user.findUnique({
+    if(userId){
+        return await prisma.user.findUnique({
+            where:{
+                id:userId
+            }
+        })
+    }
+
+    return await prisma.user.findUnique({
         where:{
-            email:email
+            email
         }
     })
-
-    return user
 }
+
 
 export default checkUserExistence
