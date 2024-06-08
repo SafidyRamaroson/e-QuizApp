@@ -6,6 +6,7 @@ import { Difficulty, Question } from "@prisma/client";
 import { IChoice,IInputChoice } from "../interfaces";
 import getTenRandomQuestionsWithChoisesServices from "./../services/question/getTenRandomQuestion.service";
 import deleteQuestionService from "../services/question/deleteOneQuestion.service";
+import getNumberOfQuestionOfEachCategory from "../services/question/getCountQuestionEachCategory";
 
 
 
@@ -75,8 +76,19 @@ const deleteQuestionController = async(req:Request,res:Response) => {
         handleError(res,error)
     }
 }
+
+
+const countQuestionsByCategory = async(req:Request,res:Response) =>{
+    try {
+        const questionsList: object= await getNumberOfQuestionOfEachCategory()
+        res.json(questionsList)
+    } catch (error) {
+        handleError(res,error)
+    }
+}
 export default {
     createQuestionAndChoises,
     getTenRandomQuestionsWithChoises,
-    deleteQuestionController
+    deleteQuestionController,
+    countQuestionsByCategory
 }
